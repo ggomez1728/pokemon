@@ -6,5 +6,6 @@ target 'pokedex-app' do
   use_frameworks!
 
   # Pods for pokedex-app
+  pod 'Alamofire', '~> 5.1'
 
 end
