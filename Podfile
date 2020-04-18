@@ -7,5 +7,6 @@ target 'pokedex-app' do
 
   # Pods for pokedex-app
   pod 'Alamofire', '~> 5.1'
+  pod 'Kingfisher', '5.3.1'
 
 end
