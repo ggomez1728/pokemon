@@ -48,7 +48,6 @@
 				46BC007539AEAE2ABA140C0E /* Pods-pokedex-app.debug.xcconfig */,
 				BD60CECA45251DBAE146A16A /* Pods-pokedex-app.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -73,15 +72,23 @@
 		C74D1DCE244ABDCE008A5181 /* pokedex-app */ = {
 			isa = PBXGroup;
 			children = (
+				C74D1DE3244AC563008A5181 /* Resources */,
 				C74D1DCF244ABDCE008A5181 /* AppDelegate.swift */,
 				C74D1DD1244ABDCE008A5181 /* SceneDelegate.swift */,
 				C74D1DD3244ABDCE008A5181 /* ViewController.swift */,
 				C74D1DD5244ABDCE008A5181 /* Main.storyboard */,
-				C74D1DD8244ABDCF008A5181 /* Assets.xcassets */,
 				C74D1DDA244ABDCF008A5181 /* LaunchScreen.storyboard */,
 				C74D1DDD244ABDCF008A5181 /* Info.plist */,
 			);
 			path = "pokedex-app";
+			sourceTree = "<group>";
+		};
+		C74D1DE3244AC563008A5181 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C74D1DD8244ABDCF008A5181 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		FD3677E87A062D00939F0E09 /* Frameworks */ = {
