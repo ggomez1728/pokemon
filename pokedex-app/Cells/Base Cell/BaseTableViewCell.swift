@@ -27,4 +27,13 @@ class BaseTableViewCell: UITableViewCell {
         
         // Configure the view for the selected state
     }
+    
+    
+    func configure(imageUrlType: String?, imageView: UIImageView) {
+        if let imageUrlType = imageUrlType {
+            imageView.isHidden = false
+            imageView.image = UIImage(named: imageUrlType)
+        }
+    }
+
 }

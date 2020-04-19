@@ -9,11 +9,11 @@
 import UIKit
 
 class PokemonListViewController: BaseViewController {
-
+    
     // MARK: - Properties
     @IBOutlet weak var tableView: UITableView!
     var viewModel: PokemonListViewModel!
-
+    
     // MARK: - View Life Cycle
     
     init(viewModel: PokemonListViewModel) {
@@ -31,14 +31,14 @@ class PokemonListViewController: BaseViewController {
         viewModel.getFunctionalities()
         configureVC()
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewModel.getFunctionalities()
     }
     
     // MARK: - Actions
-
+    
     // MARK: - Public Methods
     
     // MARK: - Private Methods
@@ -49,17 +49,27 @@ class PokemonListViewController: BaseViewController {
         configureNavigationBar()
         configureTableView()
     }
-
+    
     /// Configure VC
-     private func configureNavigationBar() {
-        guard  let nav = navigationController?.navigationBar else {
+    private func configureNavigationBar() {
+        
+        guard  let navigationBar = navigationController?.navigationBar else {
             return
         }
-        nav.backgroundColor = .white
-        nav.tintColor = .black
-        nav.topItem?.title = "Pokemon"
-     }
-
+        
+        //Setup Search Controller
+        let searchBar = UISearchBar()
+        searchBar.showsCancelButton = false
+        searchBar.placeholder = "Search"
+        searchBar.delegate = self
+        navigationItem.titleView = searchBar
+        
+        //config Bar
+        navigationBar.backgroundColor = .white
+        navigationBar.tintColor = .black
+        
+    }
+    
     /// Configure tableview
     private func configureTableView() {
         tableView.backgroundColor = .clear
@@ -72,15 +82,22 @@ class PokemonListViewController: BaseViewController {
         tableView.addGestureRecognizer(longPress)
         
         Utilities.registerCellsFor(tableView: tableView)
-
+        
+    }
+    
+    private func filterFunction(searchText: String?) {
+        
     }
     
     @objc func handleLongPress(sender: UILongPressGestureRecognizer) {
         if sender.state == .began {
             let touchPoint = sender.location(in: tableView)
-            if let indexPath = tableView.indexPathForRow(at: touchPoint) {
-                print(indexPath)
-             }
+            if let indexPath = tableView.indexPathForRow(at: touchPoint), let cellViewModel = viewModel.viewModel(for: indexPath) {                 
+                let popOverViewController = WeaknessesPopOverViewController(viewModel: WeaknessesPopOverViewModel(pokemon: cellViewModel))
+                popOverViewController.modalPresentationStyle = .overCurrentContext
+                popOverViewController.modalTransitionStyle = .crossDissolve
+                present(popOverViewController, animated: true, completion: nil)
+            }
         }
     }
 }
@@ -97,12 +114,11 @@ extension PokemonListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         if let cellViewModel = viewModel.viewModel(for: indexPath),  let cell = tableView.dequeueReusableCell(withIdentifier: PokemonTableViewCell.cellIdentifier, for: indexPath) as? PokemonTableViewCell {
             cell.configureCellWith(dataSource: cellViewModel)
             return cell
         }
-      
+        
         return UITableViewCell()
     }
 }
@@ -111,5 +127,44 @@ extension PokemonListViewController: UITableViewDataSource {
 extension PokemonListViewController: PokemonListViewModelDelegate {
     func refreshList() {
         tableView.reloadData()
+    }
+}
+
+
+extension PokemonListViewController: UISearchBarDelegate{
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar)
+    {
+        //Show Cancel
+        searchBar.setShowsCancelButton(true, animated: true)
+        searchBar.tintColor = .white
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        //Filter function
+        self.filterFunction(searchText: searchText)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        //Hide Cancel
+        searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.resignFirstResponder()
+        
+        guard let term = searchBar.text , term.isEmpty == false else {
+            //Notification "White spaces are not permitted"
+            return
+        }
+        
+        //Filter function
+        self.filterFunction(searchText: term)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        //Hide Cancel
+        searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.text = String()
+        searchBar.resignFirstResponder()
+        
+        //Filter function
+        self.filterFunction(searchText: searchBar.text)
     }
 }

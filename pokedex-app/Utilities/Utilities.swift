@@ -150,7 +150,7 @@ struct Utilities {
        - parameter collectionView: TableView to register cells
        */
       static func registerCellsFor(collectionView: UICollectionView) {
-              // tableView.register(UINib(nibName: PremiumDishSwimlaneTableViewCell.cellIdentifier, bundle: nil), forCellReuseIdentifier: PremiumDishSwimlaneTableViewCell.cellIdentifier)
+        collectionView.register(UINib(nibName: WeaknessesCollectionViewCell.cellIdentifier, bundle: nil), forCellWithReuseIdentifier: WeaknessesCollectionViewCell.cellIdentifier)
          
       }
   

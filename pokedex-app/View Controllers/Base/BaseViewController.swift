@@ -14,4 +14,15 @@ class BaseViewController: UIViewController {
     class var identifier: String {
         return String(describing: self)
     }
+    
+    // MARK: - Private Methods
+    func configure(imageUrlType: String?, imageView: UIImageView) {
+         if let imageUrlType = imageUrlType {
+             imageView.isHidden = false
+             imageView.image = UIImage(named: imageUrlType)
+         }
+     }
+     
+  
+     
 }

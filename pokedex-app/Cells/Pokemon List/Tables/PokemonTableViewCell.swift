@@ -55,32 +55,23 @@ class PokemonTableViewCell: BaseTableViewCell {
     func configureCellWith(dataSource: GenericSummary) {
         nameLabel.text = dataSource.name
         configure(PokemonManager.share.getTypeImages(for: dataSource.name ?? "").map({"Types-\($0.capitalized)"}))
-        if let pokemonIndex = dataSource.url?.replacingOccurrences(of: "https://pokeapi.co/api/v2/pokemon/", with: "").replacingOccurrences(of: "/", with: "") {
-            let pokemonImageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(pokemonIndex).png"
+        if let pokemonIndex = PokemonManager.getPokemonIndex(from: dataSource.url) {
             if let pokemonIndex = Int(pokemonIndex) {
                 numberLabel.text = String(format:"#%03d", pokemonIndex)
             }
-            Utilities.setImageOf(url: pokemonImageUrl, to: avatarImage, placeholder: nil )
-            
+            Utilities.setImageOf(url: PokemonManager.getPokemonImageUrl(for: pokemonIndex), to: avatarImage, placeholder: nil)
         }
     }
     
     // MARK: - Private Methods
-    
-    private func configure(imageUrlType: String?, imageView: UIImageView) {
-        if let imageUrlType = imageUrlType {
-            imageView.isHidden = false
-            imageView.image = UIImage(named: imageUrlType)
-        }
-    }
-    
+        
     private func configure(_ typeImages: [String]) {
         if !typeImages.isEmpty {
             configure(imageUrlType: typeImages.safeContains(0), imageView: mainTypeImage)
             configure(imageUrlType: typeImages.safeContains(1), imageView: secondaryTypeImage)
-            
         }
     }
+    
     /**
      Configure cell
      */

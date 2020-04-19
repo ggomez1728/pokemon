@@ -27,7 +27,18 @@ class PokemonManager {
     
     var pokemonTypes: [String: TypePokemonInfo] = [:]
     
+    // MARK: - Static Methods
+
+    static func getPokemonImageUrl(for pokemonNumber: String) -> String {
+        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(pokemonNumber).png"
+    }
+    
+    static func getPokemonIndex(from pokemonUrl: String?) -> String? {
+         pokemonUrl?.replacingOccurrences(of: "https://pokeapi.co/api/v2/pokemon/", with: "").replacingOccurrences(of: "/", with: "")
+    }
+    
     // MARK: - Public Methods
+    
     func getPokemonList(offset: Int, completion: @escaping ([GenericSummary], PokError?) -> Void) {
         AF.request(getPaginatedEndPoint(for: PokemonApiEndpoint.pokemonList, offset: offset))
           .validate()
@@ -74,6 +85,11 @@ class PokemonManager {
     func getTypeImages(for pokemonName: String) -> [String] {
         pokemonTypes.compactMap({self.check(pokemonName, in: $0.value.info?.pokemon ?? []) ? $0.key : nil})
     }
+    
+    func getTypeInfo(for pokemonName: String) -> [TypePokemonInfo?] {
+        pokemonTypes.compactMap({self.check(pokemonName, in: $0.value.info?.pokemon ?? []) ? $0.value : nil})
+    }
+ 
     
     // MARK: - Private Methods
     
