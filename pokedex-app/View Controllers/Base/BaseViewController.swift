@@ -11,7 +11,7 @@ import UIKit
 
 class BaseViewController: UIViewController {
 
-    class var cellIdentifier: String {
+    class var identifier: String {
         return String(describing: self)
     }
 }

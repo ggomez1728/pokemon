@@ -9,15 +9,15 @@
 import Foundation
 
 // MARK: - AutorizationToken
-struct ApiPokemonList: Codable {
+struct ApiGenericList: Codable {
     let count: Int?
     let next: String?
     let previous: String?
-    let results: [PokemonSummary]?
+    let results: [GenericSummary]?
 }
 
 // MARK: - Result
-struct PokemonSummary: Codable {
+struct GenericSummary: Codable {
     let name: String?
     let url: String?
 }

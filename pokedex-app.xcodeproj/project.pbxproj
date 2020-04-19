@@ -13,7 +13,7 @@
 		C74D1DD4244ABDCE008A5181 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74D1DD3244ABDCE008A5181 /* ViewController.swift */; };
 		C74D1DDC244ABDCF008A5181 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C74D1DDA244ABDCF008A5181 /* LaunchScreen.storyboard */; };
 		C74D1DE6244ACA7B008A5181 /* PokemonManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74D1DE5244ACA7B008A5181 /* PokemonManager.swift */; };
-		C74D1DEA244ACCA9008A5181 /* ApiPokemonList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74D1DE9244ACCA9008A5181 /* ApiPokemonList.swift */; };
+		C74D1DEA244ACCA9008A5181 /* ApiGenericList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74D1DE9244ACCA9008A5181 /* ApiGenericList.swift */; };
 		C74D1DED244ACDF0008A5181 /* GeneralConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74D1DEC244ACDF0008A5181 /* GeneralConstants.swift */; };
 		C750D740244B47A400815FD0 /* PokError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C750D73F244B47A400815FD0 /* PokError.swift */; };
 		C750D746244B52D100815FD0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C750D745244B52D100815FD0 /* Assets.xcassets */; };
@@ -29,6 +29,8 @@
 		C750D78D244B952300815FD0 /* AvenirLTStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = C750D78A244B952300815FD0 /* AvenirLTStd-Medium.otf */; };
 		C750D78E244B952300815FD0 /* AvenirLTStd-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = C750D78B244B952300815FD0 /* AvenirLTStd-Book.otf */; };
 		C750D78F244B952300815FD0 /* AvenirLTStd-Roman.otf in Resources */ = {isa = PBXBuildFile; fileRef = C750D78C244B952300815FD0 /* AvenirLTStd-Roman.otf */; };
+		C750D792244B9EB700815FD0 /* CollectionsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C750D791244B9EB700815FD0 /* CollectionsExtension.swift */; };
+		C750D794244BD2CB00815FD0 /* ApiPokemonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C750D793244BD2CB00815FD0 /* ApiPokemonType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,7 +44,7 @@
 		C74D1DDB244ABDCF008A5181 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C74D1DDD244ABDCF008A5181 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C74D1DE5244ACA7B008A5181 /* PokemonManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonManager.swift; sourceTree = "<group>"; };
-		C74D1DE9244ACCA9008A5181 /* ApiPokemonList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiPokemonList.swift; sourceTree = "<group>"; };
+		C74D1DE9244ACCA9008A5181 /* ApiGenericList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiGenericList.swift; sourceTree = "<group>"; };
 		C74D1DEC244ACDF0008A5181 /* GeneralConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralConstants.swift; sourceTree = "<group>"; };
 		C750D73F244B47A400815FD0 /* PokError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokError.swift; sourceTree = "<group>"; };
 		C750D745244B52D100815FD0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -58,6 +60,8 @@
 		C750D78A244B952300815FD0 /* AvenirLTStd-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AvenirLTStd-Medium.otf"; sourceTree = "<group>"; };
 		C750D78B244B952300815FD0 /* AvenirLTStd-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AvenirLTStd-Book.otf"; sourceTree = "<group>"; };
 		C750D78C244B952300815FD0 /* AvenirLTStd-Roman.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AvenirLTStd-Roman.otf"; sourceTree = "<group>"; };
+		C750D791244B9EB700815FD0 /* CollectionsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionsExtension.swift; sourceTree = "<group>"; };
+		C750D793244BD2CB00815FD0 /* ApiPokemonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiPokemonType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,9 +108,10 @@
 			children = (
 				C750D74D244B58FE00815FD0 /* Cells */,
 				C74D1DEB244ACDC8008A5181 /* Constants */,
-				C750D744244B52CB00815FD0 /* Resources */,
+				C750D790244B9E6C00815FD0 /* Extensions */,
 				C74D1DE4244ACA65008A5181 /* Managers */,
 				C74D1DE7244ACAFD008A5181 /* Models */,
+				C750D744244B52CB00815FD0 /* Resources */,
 				C750D749244B55AE00815FD0 /* Utilities */,
 				C750D747244B556C00815FD0 /* View Controllers */,
 				C750D748244B558E00815FD0 /* View Models */,
@@ -139,7 +144,8 @@
 		C74D1DE8244ACB28008A5181 /* Decodable */ = {
 			isa = PBXGroup;
 			children = (
-				C74D1DE9244ACCA9008A5181 /* ApiPokemonList.swift */,
+				C74D1DE9244ACCA9008A5181 /* ApiGenericList.swift */,
+				C750D793244BD2CB00815FD0 /* ApiPokemonType.swift */,
 			);
 			path = Decodable;
 			sourceTree = "<group>";
@@ -270,6 +276,14 @@
 				C750D78C244B952300815FD0 /* AvenirLTStd-Roman.otf */,
 			);
 			path = Avenir;
+			sourceTree = "<group>";
+		};
+		C750D790244B9E6C00815FD0 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C750D791244B9EB700815FD0 /* CollectionsExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		FD3677E87A062D00939F0E09 /* Frameworks */ = {
@@ -403,7 +417,9 @@
 				C750D740244B47A400815FD0 /* PokError.swift in Sources */,
 				C74D1DD4244ABDCE008A5181 /* ViewController.swift in Sources */,
 				C74D1DD0244ABDCE008A5181 /* AppDelegate.swift in Sources */,
-				C74D1DEA244ACCA9008A5181 /* ApiPokemonList.swift in Sources */,
+				C750D794244BD2CB00815FD0 /* ApiPokemonType.swift in Sources */,
+				C750D792244B9EB700815FD0 /* CollectionsExtension.swift in Sources */,
+				C74D1DEA244ACCA9008A5181 /* ApiGenericList.swift in Sources */,
 				C750D764244B615300815FD0 /* BaseViewController.swift in Sources */,
 				C750D761244B5F4600815FD0 /* PokemonListViewModel.swift in Sources */,
 				C750D759244B5DA700815FD0 /* BaseTableViewCell.swift in Sources */,
