@@ -35,6 +35,7 @@ class PokemonListViewController: BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewModel.getFunctionalities()
+
     }
     
     // MARK: - Actions
@@ -63,7 +64,7 @@ class PokemonListViewController: BaseViewController {
         searchBar.placeholder = "Search"
         searchBar.delegate = self
         navigationItem.titleView = searchBar
-        
+
         //config Bar
         navigationBar.backgroundColor = .white
         navigationBar.tintColor = .black
@@ -104,7 +105,10 @@ class PokemonListViewController: BaseViewController {
 
 // MARK: - UITableViewDelegate
 extension PokemonListViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let pokemonDetailViewController = PokemonDetailViewController(viewModel: PokemonDetailViewModel())
+        navigationController?.pushViewController(pokemonDetailViewController, animated: true)
+    }
 }
 
 // MARK: - UITableViewDataSource

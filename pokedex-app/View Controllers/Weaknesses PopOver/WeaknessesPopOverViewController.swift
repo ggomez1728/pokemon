@@ -114,7 +114,7 @@ extension WeaknessesPopOverViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cellViewModel = viewModel.viewModel(for: indexPath) {
              let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeaknessesCollectionViewCell.cellIdentifier, for: indexPath) as! WeaknessesCollectionViewCell
-            cell.configureCellWith(dataSource: cellViewModel)
+            cell.configureCell(with: cellViewModel)
             return cell
         }
        

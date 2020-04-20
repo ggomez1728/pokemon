@@ -25,7 +25,7 @@ class WeaknessesCollectionViewCell: BaseCollectionViewCell {
         configureCell()
     }
     
-    func configureCellWith(dataSource: (String, String)) {
+    func configureCell(with dataSource: (String, String)) {
         typeImage.image = UIImage(named: "Types-\(dataSource.1.capitalized)")
         multiplierLabel.text = dataSource.0
     }

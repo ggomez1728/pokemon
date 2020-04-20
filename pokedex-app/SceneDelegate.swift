@@ -18,9 +18,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        let navViewController = UINavigationController(rootViewController: PokemonListViewController(viewModel: PokemonListViewModel()))
-
-        window?.rootViewController = navViewController
+        let tabBarController = UITabBarController()
+        tabBarController.tabBar.tintColor = UIColor.black
+        //pokemon
+        let pokemonListViewController = PokemonListViewController(viewModel: PokemonListViewModel())
+        pokemonListViewController.tabBarItem = UITabBarItem.init(title: "Pokemon", image: UIImage(named: "pokemon-Icon"), tag: 0)
+        let pokemonListNavViewController = UINavigationController(rootViewController: pokemonListViewController)
+        //movies
+        let moviesListViewController = PokemonListViewController(viewModel: PokemonListViewModel())
+               moviesListViewController.tabBarItem = UITabBarItem.init(title: "Moves", image: UIImage(named: "moves-Icon"), tag: 1)
+        let moviesListNavViewController = UINavigationController(rootViewController: moviesListViewController)
+        //itens
+        let itensListViewController = PokemonListViewController(viewModel: PokemonListViewModel())
+        itensListViewController.tabBarItem = UITabBarItem.init(title: "Itens", image: UIImage(named: "itens-Icon"), tag: 2)
+        let itensListNavViewController = UINavigationController(rootViewController: itensListViewController)
+        tabBarController.viewControllers = [pokemonListNavViewController, moviesListNavViewController, itensListNavViewController]
+        
+        window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
         guard let _ = (scene as? UIWindowScene) else { return }
     }

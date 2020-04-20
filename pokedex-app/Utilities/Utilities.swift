@@ -39,7 +39,20 @@ struct Utilities {
         layer.cornerRadius = cornerRadius
     }
     
-
+    /// Add gradient to layer
+    /// - Parameters:
+    ///   - layer: Layer to apply
+    ///   - bounds: bounds to apply
+    ///   - colors: colors to apply
+    static func addGradient(_ layer: CALayer, bounds: CGRect, colors: [Any]?){
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = bounds
+        gradientLayer.colors = colors
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+        layer.addSublayer(gradientLayer)
+        
+    }
     
     /**
      Add shadow to layer
@@ -69,9 +82,9 @@ struct Utilities {
     ///   - height: height of the shadow
     ///   - opacity: opacity of the shadow
     static func addShadowAndCorners(layer: CALayer,
-        fillColor: UIColor,
-        opacity: Float,
-        cornerRadius: CGFloat, height: CGFloat, shadowRadius: CGFloat) {
+                                    fillColor: UIColor,
+                                    opacity: Float,
+                                    cornerRadius: CGFloat, height: CGFloat, shadowRadius: CGFloat) {
         if layer.sublayers?.first(where: { $0.name == "Shadow" }) == nil {
             let shadowLayer = CAShapeLayer()
             shadowLayer.path = UIBezierPath(roundedRect: layer.bounds, cornerRadius: cornerRadius).cgPath
@@ -86,9 +99,9 @@ struct Utilities {
         }
     }
     
-   
- 
-
+    
+    
+    
     /**
      Get a particular font
      
@@ -100,7 +113,7 @@ struct Utilities {
         return UIFont(name: fontType.rawValue, size: size) ?? UIFont.systemFont(ofSize: size)
     }
     
-
+    
     /**
      Check if there is an internet connection
      
@@ -145,15 +158,15 @@ struct Utilities {
     }
     
     /**
-       Register cells for collection view
-       
-       - parameter collectionView: TableView to register cells
-       */
-      static func registerCellsFor(collectionView: UICollectionView) {
+     Register cells for collection view
+     
+     - parameter collectionView: TableView to register cells
+     */
+    static func registerCellsFor(collectionView: UICollectionView) {
         collectionView.register(UINib(nibName: WeaknessesCollectionViewCell.cellIdentifier, bundle: nil), forCellWithReuseIdentifier: WeaknessesCollectionViewCell.cellIdentifier)
-         
-      }
-  
+        
+    }
+    
     /**
      Register cells for table view
      
@@ -161,6 +174,9 @@ struct Utilities {
      */
     static func registerCellsFor(tableView: UITableView) {
         tableView.register(UINib(nibName: PokemonTableViewCell.cellIdentifier, bundle: nil), forCellReuseIdentifier: PokemonTableViewCell.cellIdentifier)
+        tableView.register(UINib(nibName: SkillsTableViewCell.cellIdentifier, bundle: nil), forCellReuseIdentifier: SkillsTableViewCell.cellIdentifier)
+
+        
     }
     
     /// Apply gradient in view
@@ -177,12 +193,12 @@ struct Utilities {
     }
     
     /**
-    Change font in specific words
-    
-    - parameter label: label to apply new font
-    - parameter font: font to change in specific words
-    - parameter word: words that we need to change with parameter font
-    */
+     Change font in specific words
+     
+     - parameter label: label to apply new font
+     - parameter font: font to change in specific words
+     - parameter word: words that we need to change with parameter font
+     */
     static func setFontTo(label: UILabel, font: UIFont, words: [String]) {
         
         let attributedString = NSMutableAttributedString(string: label.text!, attributes: [
