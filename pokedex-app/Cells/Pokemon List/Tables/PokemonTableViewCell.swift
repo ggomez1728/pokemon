@@ -19,6 +19,7 @@ protocol PokemonCellDataSource: class {
 class PokemonTableViewCell: BaseTableViewCell {
     
     // MARK: - Properties
+
     @IBOutlet weak var avatarImage: UIImageView!
     @IBOutlet weak var mainTypeImage: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!

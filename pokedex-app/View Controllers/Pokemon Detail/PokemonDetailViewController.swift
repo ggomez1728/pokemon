@@ -10,16 +10,21 @@ import UIKit
 
 class PokemonDetailViewController: BaseViewController {
     
+    
     // MARK: - Properties
     var viewModel: PokemonDetailViewModel!
+    
     @IBOutlet weak var avatarImage: UIImageView!
     @IBOutlet weak var backgroundView: UIView!
-    @IBOutlet weak var cardView: UIView!
-    @IBOutlet weak var pokemonDetailView: UIView!
     @IBOutlet weak var cardScrollView: UIScrollView!
+    @IBOutlet weak var cardView: UIView!
+    @IBOutlet weak var mainTitleLabel: UILabel!
+    @IBOutlet weak var pokemonDetailView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var titleSecondaryLabel: UILabel!
-    
+    @IBOutlet weak var mainTagImage: UIImageView!
+    @IBOutlet weak var secondaryTagImage: UIImageView!
+    @IBOutlet weak var summaryDescriptionLabel: UILabel!
     // MARK: - View Life Cycle
     init(viewModel: PokemonDetailViewModel) {
         self.viewModel = viewModel
@@ -34,6 +39,7 @@ class PokemonDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureVC()
+        viewModel.fillSections()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -80,6 +86,7 @@ class PokemonDetailViewController: BaseViewController {
     
     private func configureVC() {
         viewModel.delegate = self
+        titleSecondaryLabel.isHidden = true
         configureNavigationBar()
         configureScrollView()
         configureTableView() 
@@ -90,10 +97,32 @@ class PokemonDetailViewController: BaseViewController {
     private func hideNavigationBar(_ state: Bool) {
         navigationController?.setNavigationBarHidden(state, animated: false)
     }
+    
+    // MARK: - Private Methods
+    
+    private func configure(_ typeImages: [String]) {
+        if !typeImages.isEmpty {
+            configure(imageUrlType: typeImages.safeContains(0), imageView: mainTagImage)
+            configure(imageUrlType: typeImages.safeContains(1), imageView: secondaryTagImage)
+            
+        }
+    }
 }
 
 // MARK: - PokemonDetailViewModelDelegate
 extension PokemonDetailViewController: PokemonDetailViewModelDelegate {
+    func load(description: String) {
+        summaryDescriptionLabel.text = description
+    }
+    
+    func loadMainInfo(pokemon: GenericSummary) {
+        titleSecondaryLabel.text = pokemon.name
+        mainTitleLabel.text = pokemon.name
+        configure(PokemonManager.share.getTypeImages(for: pokemon.name ?? "").map({"Tag-\($0.capitalized)"}))
+        if let pokemonIndex = PokemonManager.getPokemonIndex(from: pokemon.url) {
+            Utilities.setImageOf(url: PokemonManager.getPokemonImageUrl(for: pokemonIndex), to: avatarImage, placeholder: nil)
+        }
+    }
     
     func refreshList() {
         tableView.reloadData()
@@ -102,12 +131,28 @@ extension PokemonDetailViewController: PokemonDetailViewModelDelegate {
 
 extension PokemonDetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        4
+        viewModel.numberOfPokemonRows()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SkillsTableViewCell.cellIdentifier, for: indexPath) as! SkillsTableViewCell
-        return cell
+        
+        if let cellViewModel = viewModel.viewModel(for: indexPath) as? SkillsCellViewModel {
+            let cell = tableView.dequeueReusableCell(withIdentifier: SkillsTableViewCell.cellIdentifier, for: indexPath) as! SkillsTableViewCell
+            return cell
+        } else if let cellViewModel = viewModel.viewModel(for: indexPath) as? WeaknessesDetailViewModel {
+            let cell = tableView.dequeueReusableCell(withIdentifier: WeaknessesDetailTableViewCell.cellIdentifier, for: indexPath) as! WeaknessesDetailTableViewCell
+            cell.config(viewModel: cellViewModel)
+            return cell
+        } else if let cellViewModel = viewModel.viewModel(for: indexPath) as? EvolutionCellViewModel {
+            let cell = tableView.dequeueReusableCell(withIdentifier: EvolutionTableViewCell.cellIdentifier, for: indexPath) as! EvolutionTableViewCell
+            cell.config(viewModel: cellViewModel)
+            return cell
+            
+        }
+        
+        
+        return UITableViewCell()
+        
     }
     
     
@@ -143,6 +188,6 @@ extension PokemonDetailViewController: UIScrollViewDelegate {
         pokemonDetailView.isHidden = state
         pokemonDetailView.layoutIfNeeded()
         cardView.layoutIfNeeded()
-       
+        
     }
 }

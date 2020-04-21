@@ -117,8 +117,6 @@ extension WeaknessesPopOverViewController: UICollectionViewDataSource {
             cell.configureCell(with: cellViewModel)
             return cell
         }
-       
-        
         return UICollectionViewCell()
     }
 }

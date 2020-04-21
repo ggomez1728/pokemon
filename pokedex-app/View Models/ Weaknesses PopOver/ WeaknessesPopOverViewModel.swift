@@ -35,6 +35,7 @@ class WeaknessesPopOverViewModel: WeaknessesPopOverViewModelDataSource {
         loadDamageTo()
         delegate?.load(pokemon)
     }
+   
     /// Method that returns pokemon rows number
     func numberOfitemsRows() -> Int {
         return damageList.count

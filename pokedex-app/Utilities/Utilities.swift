@@ -175,8 +175,9 @@ struct Utilities {
     static func registerCellsFor(tableView: UITableView) {
         tableView.register(UINib(nibName: PokemonTableViewCell.cellIdentifier, bundle: nil), forCellReuseIdentifier: PokemonTableViewCell.cellIdentifier)
         tableView.register(UINib(nibName: SkillsTableViewCell.cellIdentifier, bundle: nil), forCellReuseIdentifier: SkillsTableViewCell.cellIdentifier)
-
-        
+        tableView.register(UINib(nibName: WeaknessesDetailTableViewCell.cellIdentifier, bundle: nil), forCellReuseIdentifier: WeaknessesDetailTableViewCell.cellIdentifier)
+        tableView.register(UINib(nibName: EvolutionTableViewCell.cellIdentifier, bundle: nil), forCellReuseIdentifier: EvolutionTableViewCell.cellIdentifier)
+    
     }
     
     /// Apply gradient in view

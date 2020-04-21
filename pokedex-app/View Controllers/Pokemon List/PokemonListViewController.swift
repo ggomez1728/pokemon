@@ -106,8 +106,10 @@ class PokemonListViewController: BaseViewController {
 // MARK: - UITableViewDelegate
 extension PokemonListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let pokemonDetailViewController = PokemonDetailViewController(viewModel: PokemonDetailViewModel())
-        navigationController?.pushViewController(pokemonDetailViewController, animated: true)
+        if let pokemon = viewModel.viewModel(for: indexPath) {
+            let pokemonDetailViewController = PokemonDetailViewController(viewModel: PokemonDetailViewModel(pokemon: pokemon))
+            navigationController?.pushViewController(pokemonDetailViewController, animated: true)
+        }
     }
 }
 
