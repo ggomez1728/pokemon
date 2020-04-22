@@ -26,3 +26,9 @@ struct GenericSummary: Codable {
         self.url = url
     }
 }
+
+// MARK: - apiName
+struct apiName: Codable {
+    let language: GenericSummary?
+    let name: String?
+}

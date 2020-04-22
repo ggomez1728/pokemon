@@ -36,9 +36,9 @@ class PokemonManager {
     
     static func getPokemonIndex(from pokemonUrl: String?) -> String? {
         pokemonUrl?.replacingOccurrences(of: "https://pokeapi.co/api/v2/", with: "")
-        .replacingOccurrences(of: "pokemon/", with: "")
-        .replacingOccurrences(of: "pokemon-species/", with: "")
-        .replacingOccurrences(of: "/", with: "")
+            .replacingOccurrences(of: "pokemon/", with: "")
+            .replacingOccurrences(of: "pokemon-species/", with: "")
+            .replacingOccurrences(of: "/", with: "")
     }
     
     // MARK: - Public Methods
@@ -52,6 +52,29 @@ class PokemonManager {
                     return
                 }
                 completion(response.results ?? [], nil)
+        }
+    }
+    
+    func getPokemonDetail(name pokemon: String, completion: @escaping (APIPokemonDetail?) -> Void) {
+        AF.request(getEndPoint(for: PokemonApiEndpoint.pokemonList, index: pokemon))
+            .validate()
+            .responseDecodable(of: APIPokemonDetail.self) { response in
+                guard let response = response.value else {
+                    completion(nil)
+                    return
+                }
+                completion(response)
+        }
+    }
+    
+    func getMoveDetail(url: String, completion: @escaping (ApiMoveDetail?) -> Void) {
+        AF.request(url).validate()
+            .responseDecodable(of: ApiMoveDetail.self) { response in
+                guard let response = response.value else {
+                    completion(nil)
+                    return
+                }
+                completion(response)
         }
     }
     
@@ -120,7 +143,7 @@ class PokemonManager {
                 completion(response)
         }
     }
-        
+    
     
     func getTypeImages(for pokemonName: String) -> [String] {
         pokemonTypes.compactMap({self.check(pokemonName, in: $0.value.info?.pokemon ?? []) ? $0.key : nil})
@@ -144,6 +167,7 @@ class PokemonManager {
     private func getEndPoint(for urlStructure: String) -> String {
         String(format: "%@%@", kUrlBase, urlStructure)
     }
+    
     private func getEndPoint(for urlStructure: String, index: String) -> String {
         String(format: "%@%@/%@", kUrlBase, urlStructure, index)
     }

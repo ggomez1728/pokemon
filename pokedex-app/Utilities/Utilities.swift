@@ -177,7 +177,9 @@ struct Utilities {
         tableView.register(UINib(nibName: SkillsTableViewCell.cellIdentifier, bundle: nil), forCellReuseIdentifier: SkillsTableViewCell.cellIdentifier)
         tableView.register(UINib(nibName: WeaknessesDetailTableViewCell.cellIdentifier, bundle: nil), forCellReuseIdentifier: WeaknessesDetailTableViewCell.cellIdentifier)
         tableView.register(UINib(nibName: EvolutionTableViewCell.cellIdentifier, bundle: nil), forCellReuseIdentifier: EvolutionTableViewCell.cellIdentifier)
-    
+    tableView.register(UINib(nibName: MoveDetailTableViewCell.cellIdentifier, bundle: nil), forCellReuseIdentifier: MoveDetailTableViewCell.cellIdentifier)
+
+        
     }
     
     /// Apply gradient in view

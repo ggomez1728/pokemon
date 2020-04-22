@@ -89,9 +89,53 @@ class PokemonDetailViewController: BaseViewController {
         titleSecondaryLabel.isHidden = true
         configureNavigationBar()
         configureScrollView()
-        configureTableView() 
-        Utilities.addGradient(backgroundView.layer, bounds: backgroundView.bounds, colors: BackgroundColors.bug)
+        configureTableView()
         Utilities.addCornerRadiusTo(cardView.layer, cornerRadius: 35)
+    }
+    
+    private func loadBackground(mainType: String) -> [CGColor] {
+        switch mainType {
+        case "bug":
+            return BackgroundColors.bug
+        case "dark":
+            return BackgroundColors.dark
+        case "dragon":
+            return BackgroundColors.dragon
+        case "electric":
+           return BackgroundColors.electric
+        case "fairy":
+            return BackgroundColors.fairy
+        case "fighting":
+            return BackgroundColors.fighting
+        case "fire":
+            return BackgroundColors.fire
+        case "flying":
+            return BackgroundColors.flying
+        case "ghost":
+            return BackgroundColors.ghost
+        case "grass":
+            return BackgroundColors.grass
+        case "ground":
+            return BackgroundColors.ground
+        case "ice":
+            return BackgroundColors.ice
+        case "normal":
+            return BackgroundColors.normal
+        case "poison":
+            return BackgroundColors.poison
+        case "psychic":
+            return BackgroundColors.psychic
+        case "rock":
+            return BackgroundColors.rock
+        case "steel":
+            return BackgroundColors.steel
+        case "water":
+            return BackgroundColors.water
+        default:
+            return BackgroundColors.water
+        }
+        
+        
     }
     
     private func hideNavigationBar(_ state: Bool) {
@@ -115,11 +159,15 @@ extension PokemonDetailViewController: PokemonDetailViewModelDelegate {
         summaryDescriptionLabel.text = description
     }
     
-    func loadMainInfo(pokemon: GenericSummary) {
-        titleSecondaryLabel.text = pokemon.name
-        mainTitleLabel.text = pokemon.name
-        configure(PokemonManager.share.getTypeImages(for: pokemon.name ?? "").map({"Tag-\($0.capitalized)"}))
-        if let pokemonIndex = PokemonManager.getPokemonIndex(from: pokemon.url) {
+    func loadMainInfo(type: GenericSummary) {
+        let types = PokemonManager.share.getTypeImages(for: type.name ?? "")
+        if let typeForBackground = types.first {
+            Utilities.addGradient(backgroundView.layer, bounds: backgroundView.bounds, colors:loadBackground(mainType: typeForBackground))
+        }
+        titleSecondaryLabel.text = type.name
+        mainTitleLabel.text = type.name
+        configure(types.map({"Tag-\($0.capitalized)"}))
+        if let pokemonIndex = PokemonManager.getPokemonIndex(from: type.url) {
             Utilities.setImageOf(url: PokemonManager.getPokemonImageUrl(for: pokemonIndex), to: avatarImage, placeholder: nil)
         }
     }
@@ -147,10 +195,11 @@ extension PokemonDetailViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: EvolutionTableViewCell.cellIdentifier, for: indexPath) as! EvolutionTableViewCell
             cell.config(viewModel: cellViewModel)
             return cell
-            
+        } else if let cellViewModel = viewModel.viewModel(for: indexPath) as? MoveDetailCellViewModel {
+            let cell = tableView.dequeueReusableCell(withIdentifier: MoveDetailTableViewCell.cellIdentifier, for: indexPath) as! MoveDetailTableViewCell
+            cell.config(viewModel: cellViewModel)
+            return cell
         }
-        
-        
         return UITableViewCell()
         
     }

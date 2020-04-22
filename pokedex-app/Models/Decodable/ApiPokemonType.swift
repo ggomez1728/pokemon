@@ -17,7 +17,7 @@ struct APIPokemonType: Codable {
     let moveDamageClass: GenericSummary?
     let moves: [GenericSummary]?
     let name: String?
-    let names: [Name]?
+    let names: [ApiName]?
     let pokemon: [ApiPokemon]?
 
     enum CodingKeys: String, CodingKey {
@@ -55,11 +55,7 @@ struct GameIndex: Codable {
     }
 }
 
-// MARK: - Name
-struct Name: Codable {
-    let language: GenericSummary?
-    let name: String?
-}
+
 
 // MARK: - Pokemon
 struct ApiPokemon: Codable {
