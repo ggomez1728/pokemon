@@ -19,9 +19,23 @@ class PokemonListViewModel: PokemonListViewModelDataSource {
     
     // MARK: - Properties
     var pokemonList: [GenericSummary] = []
+    var pokemonListData: [GenericSummary] = []
+
     weak var delegate: PokemonListViewModelDelegate?
     
+    
     // MARK: - Public Methods
+    
+    func applyFilter(searchText: String?) {
+        guard let searchText = searchText, searchText != "" else {
+            pokemonList = pokemonListData
+            delegate?.refreshList()
+            return
+        }
+        pokemonList = pokemonListData.compactMap({$0.name?.lowercased().contains(searchText.lowercased()) == true ? $0 : nil})
+        delegate?.refreshList()
+        
+    }
     
     func getFunctionalities() {
         PokemonManager.share.getTypes { [weak self] updated in
@@ -43,6 +57,7 @@ class PokemonListViewModel: PokemonListViewModelDataSource {
                 return
             }
             self?.pokemonList = pokemons
+            self?.pokemonListData = pokemons
             self?.delegate?.refreshList()
         }
     }

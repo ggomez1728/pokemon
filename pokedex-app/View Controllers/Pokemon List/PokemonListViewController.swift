@@ -87,7 +87,7 @@ class PokemonListViewController: BaseViewController {
     }
     
     private func filterFunction(searchText: String?) {
-        
+        viewModel.applyFilter(searchText: searchText)
     }
     
     @objc func handleLongPress(sender: UILongPressGestureRecognizer) {
