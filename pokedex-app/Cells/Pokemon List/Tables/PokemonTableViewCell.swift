@@ -19,7 +19,6 @@ protocol PokemonCellDataSource: class {
 class PokemonTableViewCell: BaseTableViewCell {
     
     // MARK: - Properties
-
     @IBOutlet weak var avatarImage: UIImageView!
     @IBOutlet weak var mainTypeImage: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -27,12 +26,9 @@ class PokemonTableViewCell: BaseTableViewCell {
     @IBOutlet weak var secondaryTypeImage: UIImageView!
     
     // MARK: - View Life Cycle
-    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
         configureCell()
-        
     }
     
     override func prepareForReuse() {
@@ -43,16 +39,12 @@ class PokemonTableViewCell: BaseTableViewCell {
     // MARK: - Actions
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
         // Configure the view for the selected state
     }
     
     // MARK: - Public Methods
-    /**
-     Configure cell with dataSource and delegate
-     
-     - parameter dataSource: DataSource to configure cell
-     */
+    /// Configure cell with dataSource and delegate
+    /// - Parameter dataSource: DataSource to configure cell
     func configureCellWith(dataSource: GenericSummary) {
         nameLabel.text = dataSource.name
         configure(PokemonManager.share.getTypeImages(for: dataSource.name ?? "").map({"Types-\($0.capitalized)"}))
@@ -65,7 +57,8 @@ class PokemonTableViewCell: BaseTableViewCell {
     }
     
     // MARK: - Private Methods
-        
+    /// Load images in ImageWiews
+    /// - Parameter typeImages: Image url list
     private func configure(_ typeImages: [String]) {
         if !typeImages.isEmpty {
             configure(imageUrlType: typeImages.safeContains(0), imageView: mainTypeImage)
@@ -73,9 +66,7 @@ class PokemonTableViewCell: BaseTableViewCell {
         }
     }
     
-    /**
-     Configure cell
-     */
+    /// Configure cell
     private func configureCell() {
         backgroundColor = .clear
         mainTypeImage.isHidden = true

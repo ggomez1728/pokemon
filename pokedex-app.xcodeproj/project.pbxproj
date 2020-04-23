@@ -158,11 +158,11 @@
 		C74C9E13244D74120056891A /* Cellls */ = {
 			isa = PBXGroup;
 			children = (
-				C74C9E14244D74C90056891A /* WeaknessesDetailViewModel.swift */,
-				C74CE583244E0B5600C2BF3A /* SkillsCellViewModel.swift */,
 				C74CE585244E0BF500C2BF3A /* BaseCellViewModel.swift */,
 				C74CE590244E4E9D00C2BF3A /* EvolutionCellViewModel.swift */,
 				C750327D244FF478000460A0 /* MoveDetailCellViewModel.swift */,
+				C74CE583244E0B5600C2BF3A /* SkillsCellViewModel.swift */,
+				C74C9E14244D74C90056891A /* WeaknessesDetailViewModel.swift */,
 			);
 			path = Cellls;
 			sourceTree = "<group>";

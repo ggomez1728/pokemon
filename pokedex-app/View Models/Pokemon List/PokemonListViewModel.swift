@@ -18,14 +18,13 @@ protocol PokemonListViewModelDelegate: class {
 class PokemonListViewModel: PokemonListViewModelDataSource {
     
     // MARK: - Properties
+    weak var delegate: PokemonListViewModelDelegate?
     var pokemonList: [GenericSummary] = []
     var pokemonListData: [GenericSummary] = []
-
-    weak var delegate: PokemonListViewModelDelegate?
-    
     
     // MARK: - Public Methods
-    
+    /// Filter by string
+    /// - Parameter searchText: text for filter
     func applyFilter(searchText: String?) {
         guard let searchText = searchText, searchText != "" else {
             pokemonList = pokemonListData
@@ -34,9 +33,9 @@ class PokemonListViewModel: PokemonListViewModelDataSource {
         }
         pokemonList = pokemonListData.compactMap({$0.name?.lowercased().contains(searchText.lowercased()) == true ? $0 : nil})
         delegate?.refreshList()
-        
     }
     
+    /// Obtain basic functionalities
     func getFunctionalities() {
         PokemonManager.share.getTypes { [weak self] updated in
             self?.getPokemons(offset: 0)
@@ -47,7 +46,6 @@ class PokemonListViewModel: PokemonListViewModelDataSource {
     func getPokemons(offset: Int) {
         PokemonManager.share.getPokemonList(offset: offset) { [weak self] (pokemons, error) in
             if let error = error {
-                //Action for Error
                 switch error {
                 case .unexpectedError:
                     break
@@ -73,6 +71,4 @@ class PokemonListViewModel: PokemonListViewModelDataSource {
     func viewModel(for indexPath: IndexPath) -> GenericSummary? {
         return pokemonList.safeContains(indexPath.row)
     }
-
-    // MARK: - Private Methods
 }

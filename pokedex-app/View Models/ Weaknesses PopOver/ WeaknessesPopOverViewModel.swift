@@ -20,16 +20,15 @@ protocol WeaknessesPopOverViewModelDelegate: class {
 class WeaknessesPopOverViewModel: WeaknessesPopOverViewModelDataSource {
     
     // MARK: - Properties
-    var pokemon: GenericSummary
     weak var delegate: WeaknessesPopOverViewModelDelegate?
     var damageList: [(String, String)] = []
+    var pokemon: GenericSummary
 
     // MARK: - View Life Cycle
     init(pokemon: GenericSummary) {
         self.pokemon = pokemon
     }
     
-
     // MARK: - Public Methods
     func showPokemon() {
         loadDamageTo()
@@ -49,6 +48,7 @@ class WeaknessesPopOverViewModel: WeaknessesPopOverViewModelDataSource {
     }
     
     // MARK: - Private Methods
+    /// Obtain list of Damage to pokemon type
     func loadDamageTo() {
         let info = PokemonManager.share.getTypeInfo(for: pokemon.name ?? "").compactMap({$0?.info?.damageRelations})
         let doubleDamageTo = info.compactMap({$0.doubleDamageTo}).flatMap({$0}).compactMap({($0.name)}).map({("X2", $0)})
@@ -59,7 +59,4 @@ class WeaknessesPopOverViewModel: WeaknessesPopOverViewModelDataSource {
         damageList.append(contentsOf: noDamageTo)
         delegate?.loadDamage()
     }
-    
-    
 }
-

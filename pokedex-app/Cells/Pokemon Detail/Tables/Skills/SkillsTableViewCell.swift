@@ -14,13 +14,10 @@ class SkillsTableViewCell: BaseTableViewCell {
     var viewModel: SkillsCellViewModel?
     
     // MARK: - View Life Cycle
-    
     func config(viewModel: SkillsCellViewModel) {
         self.viewModel = viewModel
-        
     }
 
-    // MARK: - Private Methods
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

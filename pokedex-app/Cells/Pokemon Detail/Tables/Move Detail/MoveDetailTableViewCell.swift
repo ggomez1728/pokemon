@@ -10,12 +10,14 @@ import UIKit
 
 class MoveDetailTableViewCell: BaseTableViewCell {
 
+    // MARK: - Properties
     var viewModel: MoveDetailCellViewModel!
     
     @IBOutlet weak var moveLabel: UILabel!
     @IBOutlet weak var levelLabel: UILabel!
     @IBOutlet weak var typeImage: UIImageView!
     
+    // MARK: - View Life Cycle
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -30,24 +32,20 @@ class MoveDetailTableViewCell: BaseTableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
-    
-    func configureVC() {
+
+    // MARK: - Private Methods
+    private func configureVC() {
         
     }
-    
 }
 
 extension MoveDetailTableViewCell: MoveDetailCellViewModelDelegate{
     func refresh(data:  (move: String?, type: String?, level: Int)) {
         moveLabel.text = data.move
         levelLabel.text = data.type
-        guard let typeName = data.type else {
-            return
-        }
+        guard let typeName = data.type else { return }
         typeImage.image = UIImage(named: "Types-\(typeName.capitalized)")
     }
-    
 }

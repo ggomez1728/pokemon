@@ -10,6 +10,8 @@ import UIKit
 
 class BaseCollectionViewCell: UICollectionViewCell {
 
+
+    // MARK: - View Life Cycle
     class var cellIdentifier: String {
         return String(describing: self)
     }

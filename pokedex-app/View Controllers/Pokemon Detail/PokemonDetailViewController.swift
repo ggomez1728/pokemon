@@ -10,10 +10,8 @@ import UIKit
 
 class PokemonDetailViewController: BaseViewController {
     
-    
     // MARK: - Properties
     var viewModel: PokemonDetailViewModel!
-    
     @IBOutlet weak var avatarImage: UIImageView!
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var cardScrollView: UIScrollView!
@@ -25,6 +23,7 @@ class PokemonDetailViewController: BaseViewController {
     @IBOutlet weak var mainTagImage: UIImageView!
     @IBOutlet weak var secondaryTagImage: UIImageView!
     @IBOutlet weak var summaryDescriptionLabel: UILabel!
+    
     // MARK: - View Life Cycle
     init(viewModel: PokemonDetailViewModel) {
         self.viewModel = viewModel
@@ -64,26 +63,37 @@ class PokemonDetailViewController: BaseViewController {
     }
     
     // MARK: - Private Methods
-    private func  configureNavigationBar() {
+    /// Configure Image list
+    /// - Parameter typeImages: Names of Images Assets.
+    private func configure(_ typeImages: [String]) {
+        if !typeImages.isEmpty {
+            configure(imageUrlType: typeImages.safeContains(0), imageView: mainTagImage)
+            configure(imageUrlType: typeImages.safeContains(1), imageView: secondaryTagImage)
+        }
+    }
+    
+    /// Configure NavigationBar
+    private func configureNavigationBar() {
         hideNavigationBar(true)
     }
     
+    /// Configure ScrollView
     private func configureScrollView() {
         cardScrollView.delegate = self
         Utilities.addCornerRadiusTo(cardScrollView.layer, cornerRadius: 35)
     }
     
     /// Configure tableview
-    private func configureTableView() {
-        tableView.backgroundColor = .clear
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.sectionHeaderHeight = UITableView.automaticDimension;
-        tableView.separatorStyle = .none
-        Utilities.registerCellsFor(tableView: tableView)
-        
-    }
+     private func configureTableView() {
+         tableView.backgroundColor = .clear
+         tableView.dataSource = self
+         tableView.delegate = self
+         tableView.sectionHeaderHeight = UITableView.automaticDimension;
+         tableView.separatorStyle = .none
+         Utilities.registerCellsFor(tableView: tableView)
+     }
     
+    /// configuration ViewController
     private func configureVC() {
         viewModel.delegate = self
         titleSecondaryLabel.isHidden = true
@@ -93,6 +103,14 @@ class PokemonDetailViewController: BaseViewController {
         Utilities.addCornerRadiusTo(cardView.layer, cornerRadius: 35)
     }
     
+    /// Hide navigation bar.
+    /// - Parameter state: state for show bar
+    private func hideNavigationBar(_ state: Bool) {
+        navigationController?.setNavigationBarHidden(state, animated: false)
+    }
+    
+    /// Obtain Color List for specific type
+    /// - Parameter mainType: type name
     private func loadBackground(mainType: String) -> [CGColor] {
         switch mainType {
         case "bug":
@@ -102,7 +120,7 @@ class PokemonDetailViewController: BaseViewController {
         case "dragon":
             return BackgroundColors.dragon
         case "electric":
-           return BackgroundColors.electric
+            return BackgroundColors.electric
         case "fairy":
             return BackgroundColors.fairy
         case "fighting":
@@ -134,22 +152,6 @@ class PokemonDetailViewController: BaseViewController {
         default:
             return BackgroundColors.water
         }
-        
-        
-    }
-    
-    private func hideNavigationBar(_ state: Bool) {
-        navigationController?.setNavigationBarHidden(state, animated: false)
-    }
-    
-    // MARK: - Private Methods
-    
-    private func configure(_ typeImages: [String]) {
-        if !typeImages.isEmpty {
-            configure(imageUrlType: typeImages.safeContains(0), imageView: mainTagImage)
-            configure(imageUrlType: typeImages.safeContains(1), imageView: secondaryTagImage)
-            
-        }
     }
 }
 
@@ -162,7 +164,7 @@ extension PokemonDetailViewController: PokemonDetailViewModelDelegate {
     func loadMainInfo(type: GenericSummary) {
         let types = PokemonManager.share.getTypeImages(for: type.name ?? "")
         if let typeForBackground = types.first {
-            Utilities.addGradient(backgroundView.layer, bounds: backgroundView.bounds, colors:loadBackground(mainType: typeForBackground))
+            Utilities.addGradient(backgroundView.layer, bounds: backgroundView.bounds, colors: loadBackground(mainType: typeForBackground))
         }
         titleSecondaryLabel.text = type.name
         mainTitleLabel.text = type.name
@@ -201,10 +203,7 @@ extension PokemonDetailViewController: UITableViewDataSource {
             return cell
         }
         return UITableViewCell()
-        
     }
-    
-    
 }
 
 extension PokemonDetailViewController: UITableViewDelegate {
@@ -213,12 +212,8 @@ extension PokemonDetailViewController: UITableViewDelegate {
 
 // MARK: - UIScrollViewDelegate
 extension PokemonDetailViewController: UIScrollViewDelegate {
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        guard scrollView == cardScrollView else {
-            return
-        }
+        guard scrollView == cardScrollView else { return }
         let yContentOffset = scrollView.contentOffset.y
         if pokemonDetailView.isHidden {
             hideElementsFromView(state: yContentOffset > 0)
@@ -237,6 +232,5 @@ extension PokemonDetailViewController: UIScrollViewDelegate {
         pokemonDetailView.isHidden = state
         pokemonDetailView.layoutIfNeeded()
         cardView.layoutIfNeeded()
-        
     }
 }

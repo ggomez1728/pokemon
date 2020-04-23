@@ -10,6 +10,7 @@ import UIKit
 
 class EvolutionTableViewCell: BaseTableViewCell {
 
+    // MARK: - Properties
     var viewModel: EvolutionCellViewModel!
     
     @IBOutlet weak var levelLabel: UILabel!
@@ -18,7 +19,8 @@ class EvolutionTableViewCell: BaseTableViewCell {
 
     @IBOutlet weak var pokemonFromLabel: UILabel!
     @IBOutlet weak var pokemonToLabel: UILabel!
-
+    
+    // MARK: - View Life Cycle
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -42,6 +44,7 @@ class EvolutionTableViewCell: BaseTableViewCell {
         self.viewModel.loadEvolutionChain()
     }
     
+    // MARK: - Private Methods
     private func configureVC() {
         
     }
@@ -54,9 +57,7 @@ extension EvolutionTableViewCell: EvolutionCellViewModelDelegate {
         levelLabel.text = "Lv.\(data.2)"
         pokemonFromLabel.text = data.0?.name
         pokemonToLabel.text = data.1?.name
-        
         Utilities.setImageOf(url: PokemonManager.getPokemonImageUrl(for: PokemonManager.getPokemonIndex(from: data.0?.url) ?? ""), to: avatarPokemonFromImage, placeholder: nil)
         Utilities.setImageOf(url: PokemonManager.getPokemonImageUrl(for: PokemonManager.getPokemonIndex(from: data.1?.url) ?? ""), to: avatarPokemonToImage, placeholder: nil)
-
     }
 }

@@ -24,7 +24,7 @@ class PokemonDetailViewModel: PokemonDetailViewModelDataSource {
     weak var delegate: PokemonDetailViewModelDelegate?
     private var pokemon: GenericSummary
     private var sections: [PokemonSection: [BaseCellViewModel]] = [:]
-
+    
     var moves: [String?: ApiMoveDetail?] = [:]
     
     // MARK: - View Life Cycle
@@ -33,6 +33,14 @@ class PokemonDetailViewModel: PokemonDetailViewModelDataSource {
     }
     
     // MARK: - Public Methods
+    
+    /// Create move model
+    /// - Parameter move: ApiMoveDetail
+    func createMoveModel(move: ApiMoveDetail?) -> (move: String?, type:  String?, level: Int){
+        (move: move?.names?.first(where: {$0.language?.name == Locale.current.languageCode})?.name, type:  move?.type?.name, level: 0)
+    }
+    
+    /// Fill all sections for pokemon detail view
     func fillSections() {
         sections[.stats] = [SkillsCellViewModel(), WeaknessesDetailViewModel(pokemon: pokemon)]
         loadPokemonSpecies(name: pokemon.name ?? "")
@@ -41,24 +49,19 @@ class PokemonDetailViewModel: PokemonDetailViewModelDataSource {
         getStats()
     }
     
+    /// Obtain pokemon Detail Data
     func getPokemonDetailData() {
-        guard let name = pokemon.name else {
-            return
-        }
+        guard let name = pokemon.name else { return }
         PokemonManager.share.getPokemonDetail(name: name) { pokemonDetail in
-            
             pokemonDetail?.moves?.compactMap({$0.move}).forEach({[weak self] move in
                 self?.moves[move.name] = nil
                 self?.getMoveDetail(move)
             })
         }
     }
-
     
-    func createMoveModel(move: ApiMoveDetail?) -> (move: String?, type:  String?, level: Int){
-        (move: move?.names?.first(where: {$0.language?.name == Locale.current.languageCode})?.name, type:  move?.type?.name, level: 0)
-    }
-    
+    /// Load specific section
+    /// - Parameter section: section to load
     func load(section: PokemonSection) {
         currentSection = section
         switch section {
@@ -71,15 +74,15 @@ class PokemonDetailViewModel: PokemonDetailViewModelDataSource {
         }
     }
     
+    /// Obtain pokemon species.
+    /// - Parameter pokemon: pokemon name
     func loadPokemonSpecies(name pokemon: String) {
         PokemonManager.share.getPokemonSpecies(name: pokemon) {[weak self] (pokemonSpecies) in
             if let evolutionChainUrl = pokemonSpecies.evolutionChain?.url {
                 self?.loadEvolutions(evolutionChainUrl)
             }
-            
             let flavorTextEntries = pokemonSpecies.flavorTextEntries?.first(where: {$0.language?.name == Locale.current.languageCode})
             self?.delegate?.load(description: flavorTextEntries?.flavorText ?? "" )
-            
         }
     }
     
@@ -87,7 +90,7 @@ class PokemonDetailViewModel: PokemonDetailViewModelDataSource {
     func numberOfPokemonRows() -> Int {
         return sections[currentSection]?.count ?? 0
     }
-
+    
     /// View model for indexPath
     /// - Parameter indexPath: IndexPath to get viewModel
     /// - Returns: ViewModel if any
@@ -100,10 +103,13 @@ class PokemonDetailViewModel: PokemonDetailViewModelDataSource {
         delegate?.refreshList()
     }
     
+    /// Obtain moves
     private func getMoves() {
         delegate?.refreshList()
     }
-
+    
+    /// Obtain move detail
+    /// - Parameter move: move structure
     private func getMoveDetail(_ move: GenericSummary) {
         guard let name = move.name, let url = move.url else {
             return
@@ -117,18 +123,21 @@ class PokemonDetailViewModel: PokemonDetailViewModelDataSource {
         }
     }
     
+    /// obtain stats
     private func getStats() {
         delegate?.refreshList()
     }
     
+    /// Loal evolution from url
+    /// - Parameter url: Url for evolution.
     private func loadEvolutions(_ url: String) {
-         PokemonManager.share.getEvolutionChain(url: url) {[weak self] (evolutionChain) in
-             self?.sections[.evolutions] = evolutionChain.map({EvolutionCellViewModel(evolutionChain: $0)})
-             if self?.currentSection == .evolutions {
-                 self?.delegate?.refreshList()
-             }
-         }
-     }
+        PokemonManager.share.getEvolutionChain(url: url) {[weak self] (evolutionChain) in
+            self?.sections[.evolutions] = evolutionChain.map({EvolutionCellViewModel(evolutionChain: $0)})
+            if self?.currentSection == .evolutions {
+                self?.delegate?.refreshList()
+            }
+        }
+    }
 }
 
 enum PokemonSection {

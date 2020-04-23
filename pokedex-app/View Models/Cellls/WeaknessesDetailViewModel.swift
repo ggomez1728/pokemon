@@ -20,7 +20,6 @@ protocol WeaknessesDetailViewModelDelegate: class {
 class WeaknessesDetailViewModel: BaseCellViewModel, WeaknessesDetailViewModelDataSource {
     
     // MARK: - Properties
-   
     var damageList: [(String, String)] = []
     weak var delegate: WeaknessesDetailViewModelDelegate?
     var pokemon: GenericSummary
@@ -34,13 +33,15 @@ class WeaknessesDetailViewModel: BaseCellViewModel, WeaknessesDetailViewModelDat
     func viewModel(for indexPath: IndexPath) -> (String, String)? {
         damageList.safeContains(indexPath.row)
     }
-
+    
+    // MARK: - Public Methods
     /// Method that returns pokemon rows number
     func numberOfitemsRows() -> Int {
         damageList.count
     }
     
     // MARK: - Private Methods
+    /// Load Damage from.
     func loadDamageFrom() {
         let info = PokemonManager.share.getTypeInfo(for: pokemon.name ?? "").compactMap({$0?.info?.damageRelations})
         let doubleDamageFrom = info.compactMap({$0.doubleDamageFrom}).flatMap({$0}).compactMap({($0.name)}).map({("X2", $0)})

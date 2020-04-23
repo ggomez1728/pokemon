@@ -11,6 +11,7 @@ import UIKit
 class WeaknessesPopOverViewController: BaseViewController {
     
     // MARK: - Properties
+    private var viewModel: WeaknessesPopOverViewModel
     @IBOutlet weak var avatarImage: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var mainTypeImage: UIImageView!
@@ -19,10 +20,7 @@ class WeaknessesPopOverViewController: BaseViewController {
     @IBOutlet weak var popOverView: UIView!
     @IBOutlet weak var secondaryTypeImage: UIImageView!
     
-    private var viewModel: WeaknessesPopOverViewModel
-
     // MARK: - View Life Cycle
-    
     init(viewModel: WeaknessesPopOverViewModel) {
         self.viewModel = viewModel
         let bundle = Bundle(for: WeaknessesPopOverViewController.classForCoder())
@@ -37,31 +35,23 @@ class WeaknessesPopOverViewController: BaseViewController {
         super.viewDidLoad()
         configureVC()
         viewModel.showPokemon()
-
-        // Do any additional setup after loading the view.
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        var touch: UITouch? = touches.first
+        let touch: UITouch? = touches.first
         if touch?.view != popOverView {
             dismiss(animated: true, completion: nil)
-            
         }
     }
     
-    
-    // MARK: - Actions
-
-    // MARK: - Public Methods
-    
     // MARK: - Private Methods
+    
+    /// Configure View Controller
     private func configureVC() {
         viewModel.delegate = self
         configureCollectionView()
         Utilities.addCornerRadiusTo(popOverView.layer, cornerRadius: 16.0)
         Utilities.addShadowTo(popOverView.layer)
-        //        Utilities.addShadowAndCorners(layer: popOverView.layer, fillColor: .white, opacity: 0.2, cornerRadius: 18.0, height: 1.0, shadowRadius: 1.0)
-        
     }
     
     /// Configure tableview
@@ -69,11 +59,11 @@ class WeaknessesPopOverViewController: BaseViewController {
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.delegate = self
-        
         Utilities.registerCellsFor(collectionView: collectionView)
-        
     }
     
+    /// Load Images in ImagesViews
+    /// - Parameter typeImages: Assets names of types
     private func configure(_ typeImages: [String]) {
         if !typeImages.isEmpty {
             configure(imageUrlType: typeImages.safeContains(0), imageView: mainTypeImage)

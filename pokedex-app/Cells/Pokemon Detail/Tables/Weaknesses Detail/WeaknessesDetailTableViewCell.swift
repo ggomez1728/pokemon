@@ -17,11 +17,9 @@ class WeaknessesDetailTableViewCell: BaseTableViewCell {
     @IBOutlet weak var collectionView: UICollectionView!
     
     // MARK: - View Life Cycle
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         configureVC()
-
     }
     
     override func prepareForReuse() {
@@ -40,9 +38,6 @@ class WeaknessesDetailTableViewCell: BaseTableViewCell {
         super.setSelected(selected, animated: animated)
         
     }
-
-    // MARK: - Public Methods
-  
     
     // MARK: - Private Methods
     private func configureVC() {
@@ -55,9 +50,7 @@ class WeaknessesDetailTableViewCell: BaseTableViewCell {
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.delegate = self
-        
         Utilities.registerCellsFor(collectionView: collectionView)
-        
     }
 }
 

@@ -38,10 +38,6 @@ class PokemonListViewController: BaseViewController {
 
     }
     
-    // MARK: - Actions
-    
-    // MARK: - Public Methods
-    
     // MARK: - Private Methods
     
     /// Configure VC
@@ -51,24 +47,17 @@ class PokemonListViewController: BaseViewController {
         configureTableView()
     }
     
-    /// Configure VC
+    /// Configure Navigation Bar
     private func configureNavigationBar() {
-        
-        guard  let navigationBar = navigationController?.navigationBar else {
-            return
-        }
-        
+        guard let navigationBar = navigationController?.navigationBar else { return }
         //Setup Search Controller
         let searchBar = UISearchBar()
         searchBar.showsCancelButton = false
         searchBar.placeholder = "Search"
         searchBar.delegate = self
         navigationItem.titleView = searchBar
-
-        //config Bar
         navigationBar.backgroundColor = .white
         navigationBar.tintColor = .black
-        
     }
     
     /// Configure tableview
@@ -78,19 +67,18 @@ class PokemonListViewController: BaseViewController {
         tableView.delegate = self
         tableView.sectionHeaderHeight = UITableView.automaticDimension;
         tableView.separatorStyle = .none
-        
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
         tableView.addGestureRecognizer(longPress)
-        
         Utilities.registerCellsFor(tableView: tableView)
-        
     }
     
+    /// Apply filter
+    /// - Parameter searchText: text for filter
     private func filterFunction(searchText: String?) {
         viewModel.applyFilter(searchText: searchText)
     }
     
-    @objc func handleLongPress(sender: UILongPressGestureRecognizer) {
+    @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
         if sender.state == .began {
             let touchPoint = sender.location(in: tableView)
             if let indexPath = tableView.indexPathForRow(at: touchPoint), let cellViewModel = viewModel.viewModel(for: indexPath) {                 

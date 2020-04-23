@@ -29,6 +29,7 @@ class MoveDetailCellViewModel: BaseCellViewModel, MoveDetailCellViewModelDataSou
         self.move = move
     }
     
+    // MARK: - Public Methods
     func loadMove() {
         delegate?.refresh(data: move)
     }
